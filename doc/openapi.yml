@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: RealWorld Example App
+  version: 0.0.1
+  contact:
+    email: szokolai.mate@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+paths:
+  /login:
+    post:
+      summary: "Login with given credentials"
+      requestBody:
+        description: "User credentials"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Credentials"
+      responses:
+        "200":
+          description: "Login successful"
+        "400":
+          description: "TODO"
+  /logout:
+    get:
+      summary: "Logout user"
+      responses:
+        default:
+          description: "Logged out"
+  /register:
+    post:
+      summary: "Register new user with given credentials"
+      requestBody:
+        description: "User credentials"
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Credentials"
+      responses:
+        "201":
+          description: "User registered"
+        "400":
+          description: "TODO"
+components:
+  schemas:
+    Credentials:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+          format: "email"
+        password:
+          type: "string"
+          format: "password"
