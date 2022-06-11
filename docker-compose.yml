@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+  backend:
+    image: node:14
+    container_name: backend-docker
+    restart: always
+    working_dir: /usr/src/app/backend
+    command: "npm run dev"
+    links:
+      - db
+    volumes:
+      - ./backend:/usr/src/app/backend
+    ports:
+      - "8080:8080"
+  db:
+    image: mongo
+    container_name: database-docker
+    restart: always
