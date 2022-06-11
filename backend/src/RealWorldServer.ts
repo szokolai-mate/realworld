@@ -1,5 +1,6 @@
 import Hapi from "@hapi/hapi";
 import { Server } from "@hapi/hapi";
+import { RegisterRoute } from "./routes/register";
 
 export let server: Server;
 
@@ -10,22 +11,14 @@ export class RealWorldServer {
         this.server = Hapi.server({
             port: process.env.PORT || port,
             host: process.env.HOST || host
-        })
-
-
-        // TODO: routing management
-        this.server.route({
-            method: 'GET',
-            path: '/',
-            handler: (request, h) => {
-                return 'Live still working!';
-            }
         });
+
+        this.server.route(RegisterRoute);
     }
 
     async start() {
         // TODO: logging
         console.log(`Listening on ${this.server.settings.host}:${this.server.settings.port}`);
-        return this.server.start()
+        return this.server.start();
     }
 }
