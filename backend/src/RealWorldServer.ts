@@ -17,8 +17,6 @@ export class RealWorldServer {
     }
 
     async start() {
-        // TODO: logging
-        console.log(`Listening on ${this.server.settings.host}:${this.server.settings.port}`);
         return this.server.start();
     }
 

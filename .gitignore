@@ -1,6 +1,4 @@
 **/node_modules
 **/build
-**/test/report
-
-# Test run artifacts
-**/.nyc_output
+coverage
+test_report

@@ -1,5 +1,4 @@
 import { Request, ResponseToolkit} from "@hapi/hapi"
-import { MongooseError } from "mongoose"
 import { Credentials } from "../models/credentials"
 import { CredentialsModel, CredentialsValidation } from "../models/credentials-model"
 
@@ -20,7 +19,7 @@ export const RegisterRoute = {
                     error: "Email address already in use!"
                 }).code(400);
             }
-            else throw err;
+            throw err;
         }
 
         return h.response().code(201);

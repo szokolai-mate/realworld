@@ -1,18 +1,18 @@
-import { Database } from "./Database";
+import { connect } from "mongoose";
 import { RealWorldServer } from "./RealWorldServer";
 
 export class RealWorld {
 
-    private server: RealWorldServer
-    private database: Database
+    private server: RealWorldServer;
 
     constructor(){
         this.server = new RealWorldServer(8080, "0.0.0.0");
-        this.database = new Database();
     }
 
     async start(){
-        await this.database.connect();
+        await connect('mongodb://db');
         await this.server.start();
+        // TODO: logging
+        console.log(`Listening on ${"0.0.0.0"}:${8080}`);
     }
 }

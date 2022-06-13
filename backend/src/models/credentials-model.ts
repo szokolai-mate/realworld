@@ -5,7 +5,7 @@ import { Credentials } from "./credentials";
 export const CredentialsValidation = {
     payload: Joi.object({
         email: Joi.string().email().required(),
-        password: Joi.string().required(),
+        password: Joi.string().alphanum().min(64).max(64).required(),
         repeatPassword: Joi.ref('password')
     })
 };
