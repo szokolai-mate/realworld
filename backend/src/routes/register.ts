@@ -1,6 +1,7 @@
 import { Request, ResponseToolkit} from "@hapi/hapi"
+import { MongooseError } from "mongoose"
 import { Credentials } from "../models/credentials"
-import { CredentialsValidation } from "../models/credentials-validation"
+import { CredentialsModel, CredentialsValidation } from "../models/credentials-model"
 
 export const RegisterRoute = {
     method: 'POST',
@@ -8,11 +9,20 @@ export const RegisterRoute = {
     options: {
         validate: CredentialsValidation
     },
-    handler: (request: Request, h: ResponseToolkit) => {
-        console.log(request.headers)
-        let cred = request.payload as Credentials
-        console.log(cred.email)
-        console.log(cred.password)
-        return h.response("Not implemented").code(501);
+    handler: async (request: Request, h: ResponseToolkit) => {
+        try {
+            await new CredentialsModel(request.payload as Credentials).save()
+        }
+        catch(err: any) {
+            if (err.code === 11000) {
+                // Duplicate key
+                return h.response({
+                    error: "Email address already in use!"
+                }).code(400);
+            }
+            else throw err;
+        }
+
+        return h.response().code(201);
     }
 }
